@@ -12,7 +12,7 @@ Ardublockly.init = function() {
   // Inject Blockly into content_blocks
   Ardublockly.injectBlockly(
       document.getElementById('content_blocks'),
-      '/ardublockly/ardublockly/ardublockly_toolbox.xml',
+      Ardublockly.TOOLBOX_XML,
       '/ardublockly/blockly/');
 
   Ardublockly.designJsInit();
@@ -23,7 +23,7 @@ Ardublockly.init = function() {
 
 /** Initialises all the design related JavaScript. */
 Ardublockly.designJsInit = function() {
-  Ardublockly.resizeToggleToolboxBotton();
+  Ardublockly.resizeToggleToolboxButton();
 };
 
 /** Binds the event listeners relevant to the page design. */
@@ -165,19 +165,14 @@ Ardublockly.displayToolbox = function(show) {
  * The toolbox width does not change with workspace width, so safe to do once,
  * but it needs to be done after blockly has been injected.
  */
-Ardublockly.resizeToggleToolboxBotton = function() {
-  // As the toolbox inject is asynchronous we need to wait
-  if (Ardublockly.isBlocklyInjected() === false) {
-    setTimeout(Ardublockly.resizeToggleToolboxBotton, 50);
-  } else {
-    Blockly.fireUiEvent(window, 'resize');
-    var button = $('#button_toggle_toolbox');
-    // Sets the toolbox toggle button width to that of the toolbox
-    if (Ardublockly.isToolboxVisible() && Ardublockly.blocklyToolboxWidth()) {
-      // For some reason normal set style and getElementById didn't work
-      button.width(Ardublockly.blocklyToolboxWidth());
-      button[0].style.display = '';
-    }
+Ardublockly.resizeToggleToolboxButton = function() {
+  Blockly.fireUiEvent(window, 'resize');
+  var button = $('#button_toggle_toolbox');
+  // Sets the toolbox toggle button width to that of the toolbox
+  if (Ardublockly.isToolboxVisible() && Ardublockly.blocklyToolboxWidth()) {
+    // For some reason normal set style and getElementById didn't work
+    button.width(Ardublockly.blocklyToolboxWidth());
+    button[0].style.display = '';
   }
 };
 
