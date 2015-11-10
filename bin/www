@@ -7,6 +7,11 @@ var server = http.createServer(app);
 var ifconfig = require('wireless-tools/ifconfig');
 var exec = require('child_process').exec;
 var fs = require('fs');
+//serial for car
+var SerialPort = require('serialport').SerialPort
+var serialPort = new SerialPort('/dev/ttyMCC', {
+  baudrate: 115200
+});
 var port = normalizePort(process.env.PORT || '80');
 app.set('port', port);
 
@@ -101,15 +106,20 @@ io.on('connection', function(socket){
 
   });
 
+  serialPort.on("open", function () {
+    console.log('Serial Open');
+
+
+  });
+
   socket.on('move', function(data){
+
     console.log(data);
-    fs.writeFile('/dev/ttyMCC', data, function(error) {
-      if (error) {
-        console.error("write error:  " + error.message);
-      } else {
-        console.log(data);
-      }
+    serialPort.write(data, function(err, results) {
+      if (err){console.log('err ' + err);}
+
     });
+
   });
 
   socket.on('disconnect', function () {
