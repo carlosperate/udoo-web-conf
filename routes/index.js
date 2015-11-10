@@ -38,6 +38,10 @@ router.get('/tutorials', function(req, res, next) {
   res.render('tutorials');
 });
 
+router.get('/carcontrol', function(req, res, next) {
+  res.render('carcontrol');
+});
+
 router.get('/date', function(req, res, next) {
 
   /*var child_process = Promise.promisifyAll(require('child_process'));*/
