@@ -5,19 +5,17 @@
  * here go against the css rules from the Materialize framework.
  */
 
-
 .ardublockly-panel-header {
   padding: 0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-.ardublockly-menu {
-  vertical-align: bottom;
-  position: absolute;
-  right: 15px;    /* bootstrap columns horizontal padding*/
-}
 .ardublockly-panel-body {
   padding-top: 0 !important;
+}
+
+.panel-borders {
+  border: 1px solid #e6e9ed;
 }
 .code-panel-body {
   padding-top: 0 !important;
@@ -28,6 +26,16 @@
   padding-top: 0 !important;
   border-color: #e0e0e0 !important;
   border-width: 1px !important;
+}
+
+
+/*************/
+/*  Buttons  */
+/*************/
+.ardublockly-menu {
+  vertical-align: bottom;
+  position: absolute;
+  right: 15px;    /* bootstrap columns horizontal padding*/
 }
 
 .button_toggle_toolbox_off {
@@ -41,6 +49,7 @@
   z-index: 5;
 }
 
+
 /************************************/
 /*  Blocks, Arduino, and XML areas  */
 /************************************/
@@ -51,7 +60,7 @@
   background-color: #ffffff;
 }
 
- #blocks_panel {
+#blocks_panel {
   padding: 0px;
   position: relative !important;
   min-height: 480px;
@@ -62,12 +71,7 @@
   height: -o-calc(100vh - 190px);       /* Opera    */
   height: calc(100vh - 190px);          /* Standard */
 }
-.blocks_panel_small {
-  height: -moz-calc(100vh - 350px);     /* Firefox  */
-  height: -webkit-calc(100vh - 350px);  /* WebKit   */
-  height: -o-calc(100vh - 350px);       /* Opera    */
-  height: calc(100vh - 350px);          /* Standard */
-}
+
 #content_blocks {
   margin: 0;
   padding: 0;
@@ -95,12 +99,7 @@
   height: -o-calc(100vh - 286px);       /* Opera    */
   height: calc(100vh - 286px);          /* Standard */
 }
-.content_xml_small {
-  height: -moz-calc(100vh - 446px);     /* Firefox  */
-  height: -webkit-calc(100vh - 446px);  /* WebKit   */
-  height: -o-calc(100vh - 446px);       /* Opera    */
-  height: calc(100vh - 446px);          /* Standard */
-}
+
 
 /* The materialize framework changes height of the div to show or hide */
 /* the collapsible elements. */
@@ -125,12 +124,6 @@
   height: -o-calc(100vh - 280px);       /* Opera    */
   height: calc(100vh - 280px);          /* Standard */
 }
-.content_arduino_small {
-  height: -moz-calc(100vh - 440px);     /* Firefox  */
-  height: -webkit-calc(100vh - 440px);  /* WebKit   */
-  height: -o-calc(100vh - 440px);       /* Opera    */
-  height: calc(100vh - 440px);          /* Standard */
-}
 
 
 /************/
@@ -152,10 +145,6 @@
 }
 .code_highlight_deleted {
   background-color: #FDBEBE;
-}
-
-.ardublockly-title {
-
 }
 
 
