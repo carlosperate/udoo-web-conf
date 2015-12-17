@@ -19,6 +19,7 @@
 }
 .code-panel-body {
   padding-top: 0 !important;
+  padding-bottom: 0 !important;
   border-color: #e0e0e0 !important;
   border-width: 1px !important;
 }
@@ -38,17 +39,51 @@
   right: 15px;    /* bootstrap columns horizontal padding*/
 }
 
+/* Toggle the toolbox on and off button */
+.button_toggle_toolbox_on {
+  position: absolute;
+  margin: 0 !important;
+  padding: 0px 0 0 0  !important;
+  left: 15px;
+  top: 0px;
+  text-align: center;
+  font-size: 2rem !important;
+  line-height: 32px;
+  color: #000000;
+  cursor: pointer;
+  z-index: 5;
+  border-color: #e0e0e0 !important;
+  border-width: 1px !important;
+  -webkit-border-radius: 3px 3px 3px 3px !important;
+  -moz-border-radius: 3px 3px 3px 3px !important;
+  border-radius: 3px 3px 3px 3px !important;
+  background-color: rgba(210, 210, 210, 0.8) !important;
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  transition: background 0.3s linear, box-shadow 0.3s linear, border-width 0.3s linear;
+  -ms-transition: background 0.3s linear, box-shadow 0.3s linear, border-width 0.3s linear;
+  -moz-transition: background 0.3s linear, -moz-box-shadow 0.3s linear, border-width 0.3s linear;
+  -webkit-transition: background 0.3s linear, -webkit-box-shadow 0.3s linear, border-width 0.3s linear;
+}
+.button_toggle_toolbox_on:hover {
+  color: rgba(236, 40, 142, 1) !important;
+}
 .button_toggle_toolbox_off {
   position: absolute;
   margin: 0 !important;
-  padding: 0px !important;
-  left: 12px;
-  top: 4px;
+  padding: 0 !important;
+  left: 15px;
+  top: 2px;
   text-align: center;
-  font-size:2rem !important;
+  font-size: 2rem !important;
+  color: #000000;
+  cursor: pointer;
   z-index: 5;
 }
-
+.button_toggle_toolbox_off:hover {
+  color: rgba(236, 40, 142, 1) !important;
+}
 
 /************************************/
 /*  Blocks, Arduino, and XML areas  */

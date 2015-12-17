@@ -259,8 +259,8 @@ Ardublockly.displayToolbox = function(show) {
 
   var classOn = 'button_toggle_toolbox_on';
   var classOff = 'button_toggle_toolbox_off';
-  var visOn = 'mdi-action-visibility';
-  var visOff = 'mdi-action-visibility-off';
+  var visOn = 'fa fa-eye fa';
+  var visOff = 'fa fa-eye-slash fa';
   if (show) {
     toolbox.show();
     button.className = button.className.replace(classOn, classOff);
