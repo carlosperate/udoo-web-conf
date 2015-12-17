@@ -1,0 +1,250 @@
+/**
+ * @fileoverview CSS file for the Ardublockly for UDOO-web-conf application.
+ *
+ * There are a lot of '!important' tags in this file as a lot of the rules set
+ * here go against the css rules from the Materialize framework.
+ */
+
+
+.ardublockly-panel-header {
+  padding: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.ardublockly-menu {
+  vertical-align: bottom;
+  position: absolute;
+  right: 15px;    /* bootstrap columns horizontal padding*/
+}
+.ardublockly-panel-body {
+  padding-top: 0 !important;
+}
+.code-panel-body {
+  padding-top: 0 !important;
+  border-color: #e0e0e0 !important;
+  border-width: 1px !important;
+}
+.xml-panel-body {
+  padding-top: 0 !important;
+  border-color: #e0e0e0 !important;
+  border-width: 1px !important;
+}
+
+.button_toggle_toolbox_off {
+  position: absolute;
+  margin: 0 !important;
+  padding: 0px !important;
+  left: 12px;
+  top: 4px;
+  text-align: center;
+  font-size:2rem !important;
+  z-index: 5;
+}
+
+/************************************/
+/*  Blocks, Arduino, and XML areas  */
+/************************************/
+.content {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+ #blocks_panel {
+  padding: 0px;
+  position: relative !important;
+  min-height: 480px;
+}
+.blocks_panel_large {
+  height: -moz-calc(100vh - 190px);     /* Firefox  */
+  height: -webkit-calc(100vh - 190px);  /* WebKit   */
+  height: -o-calc(100vh - 190px);       /* Opera    */
+  height: calc(100vh - 190px);          /* Standard */
+}
+.blocks_panel_small {
+  height: -moz-calc(100vh - 350px);     /* Firefox  */
+  height: -webkit-calc(100vh - 350px);  /* WebKit   */
+  height: -o-calc(100vh - 350px);       /* Opera    */
+  height: calc(100vh - 350px);          /* Standard */
+}
+#content_blocks {
+  margin: 0;
+  padding: 0;
+  min-height: 480px;
+  height: -moz-calc(100vh - 190px);     /* Firefox  */
+  height: -webkit-calc(100vh - 190px);  /* WebKit   */
+  height: -o-calc(100vh - 190px);       /* Opera    */
+  height: calc(100vh - 190px);          /* Standard */
+}
+
+#content_xml {
+  resize: none;
+  outline: none;
+  border: none;
+  padding: 0px 5px;
+  font-family: monospace;
+  font-size: smaller;
+  overflow: scroll;
+  font-style: 0.2em !important;
+  min-height: 384px;
+}
+.content_xml_large {
+  height: -moz-calc(100vh - 286px);     /* Firefox  */
+  height: -webkit-calc(100vh - 286px);  /* WebKit   */
+  height: -o-calc(100vh - 286px);       /* Opera    */
+  height: calc(100vh - 286px);          /* Standard */
+}
+.content_xml_small {
+  height: -moz-calc(100vh - 446px);     /* Firefox  */
+  height: -webkit-calc(100vh - 446px);  /* WebKit   */
+  height: -o-calc(100vh - 446px);       /* Opera    */
+  height: calc(100vh - 446px);          /* Standard */
+}
+
+/* The materialize framework changes height of the div to show or hide */
+/* the collapsible elements. */
+#content_arduino {
+  resize: none;
+  outline: none;
+  border: none;
+  padding: 0px 5px;
+  font-size: 1.2rem;
+  font-family: "Droid Sans Mono", monospace;
+  overflow: auto;
+  -moz-user-select: text;
+  -khtml-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  min-height: 388px;
+}
+.content_arduino_large {
+  height: -moz-calc(100vh - 280px);     /* Firefox  */
+  height: -webkit-calc(100vh - 280px);  /* WebKit   */
+  height: -o-calc(100vh - 280px);       /* Opera    */
+  height: calc(100vh - 280px);          /* Standard */
+}
+.content_arduino_small {
+  height: -moz-calc(100vh - 440px);     /* Firefox  */
+  height: -webkit-calc(100vh - 440px);  /* WebKit   */
+  height: -o-calc(100vh - 440px);       /* Opera    */
+  height: calc(100vh - 440px);          /* Standard */
+}
+
+
+/************/
+/*  Others  */
+/************/
+/* Edit logo for code and xml collapsibles*/
+.collapsible_logo {
+  width: 3rem;
+  font-weight: bold;
+  display: block;
+  float: left;
+  text-align: center;
+  margin-right: 1rem;
+}
+
+/* Colours for the new and deleted code highlighting */
+.code_highlight_new {
+  background-color: rgba(255, 204, 51, 0.5); /* Arduino yellow 50% */
+}
+.code_highlight_deleted {
+  background-color: #FDBEBE;
+}
+
+.ardublockly-title {
+
+}
+
+
+/*****************************/
+/*  Overwriting Blockly CSS  */
+/*****************************/
+/* Blockly text for the following components:  */
+.blocklyTreeLabel,           /* Toolbox        */
+.blocklyText,                /* Block          */
+.goog-menuitem-content {     /* Drop down menu */
+  /*font-family: "Roboto", sans-serif!important;*/
+}
+
+/* Entire Blockly area, Toolbox dranw on top */
+.blocklySvg {
+  border-width: 0 !important;
+}
+
+/* Toolbox */
+.blocklyToolboxDiv {
+  border-color: #e0e0e0 !important;
+  border-width: 0px 1px 0px 0px !important;
+  -webkit-border-radius: 0px 4px 4px 0px !important;
+  -moz-border-radius: 4px 4px 0px 0px !important;
+  border-radius: 0px 4px 4px 0px !important;
+  border: none !important;
+  margin: 0px !important;
+  padding: 0px 0px 0px 0px !important;
+  background-color: rgba(210, 210, 210, 0.8) !important;
+  /*background: rgba(98, 174, 178, .2) !important;  /* Arduino Light Teal */
+  overflow: hidden !important;
+}
+.blocklyTreeRoot {
+  background: none !important;
+  border: none !important;
+  margin: 36px 0px 0px 0px !important;
+  padding: 0px 1px !important;
+  height: -moz-calc(100% - 37px);     /* Firefox  */
+  height: -webkit-calc(100% - 37px);  /* WebKit   */
+  height: -o-calc(100% - 37px);       /* Opera    */
+  height: calc(100% - 37px);          /* Standard */
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.blocklyTreeRow {
+  background: none !important;
+  border: none !important;
+  margin: 0px 0px !important;
+  padding: 7px 16px 7px 0px !important;
+  box-sizing: content-box !important;
+}
+.blocklyTreeSelected {
+  background-color: rgba(158, 54, 179, 1) !important;
+}
+.blocklyTreeRow:not(.blocklyTreeSelected):hover {
+  background-color: rgba(236, 40, 142, 1) !important;
+  color: #FFFFFF;
+}
+.blocklyTreeLabel {
+}
+.blocklyTreeSeparator{
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+/* Toolbox second column with blocks*/
+.blocklyFlyoutBackground {
+  background-color: rgba(210, 210, 210, 0.5) !important;
+  -webkit-border-radius: 0px 4px 4px 0px !important;
+  -moz-border-radius: 0px 4px 4px 0px !important;
+  border-radius: 0px 4px 4px 0px !important;
+}
+
+/* Blockly scrollbars */
+.blocklyScrollbarKnob {
+  fill: #EC288E !important;
+  fill-opacy: 1;
+}
+.blocklyScrollbarBackground {
+  stroke-width: 0px !important;
+  fill: none !important;
+}
+
+/* Edit select colour to Arduino yellow. (Edited out as already this colour)
+.blocklyHighlightedConnectionPath,
+.blocklySelected>.blocklyPath {
+  stroke: rgba(255, 204, 51, 1) !important;
+} */
+
+/*******************************/
+/*  Overwriting Bootstrap CSS  */
+/*******************************/
