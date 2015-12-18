@@ -31,11 +31,31 @@ Ardublockly.bindEventListeners = function() {
   // Resize blockly workspace on window resize
   window.addEventListener('resize', Ardublockly.resizeBlocklyWorkspace, false);
 
+  // General buttons
   Ardublockly.bindClick_('button_new', Ardublockly.discardAllBlocks);
   Ardublockly.bindClick_('button_load', Ardublockly.loadUserXmlFile);
   Ardublockly.bindClick_('button_save', Ardublockly.saveXmlFileAs);
   Ardublockly.bindClick_('button_upload', Ardublockly.sendCode);
   Ardublockly.bindClick_('button_toggle_toolbox', Ardublockly.toogleToolbox);
+
+  // Load examples buttons
+  Ardublockly.bindClick_('menu_example_blink', function() {
+    Ardublockly.loadServerXmlFile('/ardublockly/examples/blink.xml');
+  });
+  Ardublockly.bindClick_('menu_example_serial', function() {
+    Ardublockly.loadServerXmlFile(
+        '/ardublockly/examples/serial_print_ascii_.xml');
+  });
+  Ardublockly.bindClick_('menu_example_serial_game', function() {
+    Ardublockly.loadServerXmlFile(
+        '/ardublockly/examples/serial_repeat_game.xml');
+  });
+  Ardublockly.bindClick_('menu_example_servo', function() {
+    Ardublockly.loadServerXmlFile('/ardublockly/examples/servo_knob.xml');
+  });
+  Ardublockly.bindClick_('menu_example_setpper', function() {
+    Ardublockly.loadServerXmlFile('/ardublockly/examples/stepper_knob.xml');
+  });
 };
 
 /**
