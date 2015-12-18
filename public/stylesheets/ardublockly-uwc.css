@@ -25,6 +25,7 @@
 }
 .xml-panel-body {
   padding-top: 0 !important;
+  padding-bottom: 0 !important;
   border-color: #e0e0e0 !important;
   border-width: 1px !important;
 }
@@ -100,7 +101,7 @@
   position: relative !important;
   min-height: 480px;
 }
-.blocks_panel_large {
+.blocks_panel {
   height: -moz-calc(100vh - 190px);     /* Firefox  */
   height: -webkit-calc(100vh - 190px);  /* WebKit   */
   height: -o-calc(100vh - 190px);       /* Opera    */
@@ -128,11 +129,11 @@
   font-style: 0.2em !important;
   min-height: 384px;
 }
-.content_xml_large {
-  height: -moz-calc(100vh - 286px);     /* Firefox  */
-  height: -webkit-calc(100vh - 286px);  /* WebKit   */
-  height: -o-calc(100vh - 286px);       /* Opera    */
-  height: calc(100vh - 286px);          /* Standard */
+.content_xml {
+  height: -moz-calc(100vh - 260px);     /* Firefox  */
+  height: -webkit-calc(100vh - 260px);  /* WebKit   */
+  height: -o-calc(100vh - 260px);       /* Opera    */
+  height: calc(100vh - 260px);          /* Standard */
 }
 
 
@@ -153,11 +154,11 @@
   user-select: text;
   min-height: 388px;
 }
-.content_arduino_large {
-  height: -moz-calc(100vh - 280px);     /* Firefox  */
-  height: -webkit-calc(100vh - 280px);  /* WebKit   */
-  height: -o-calc(100vh - 280px);       /* Opera    */
-  height: calc(100vh - 280px);          /* Standard */
+.content_arduino {
+  height: -moz-calc(100vh - 260px);     /* Firefox  */
+  height: -webkit-calc(100vh - 260px);  /* WebKit   */
+  height: -o-calc(100vh - 260px);       /* Opera    */
+  height: calc(100vh - 260px);          /* Standard */
 }
 
 
