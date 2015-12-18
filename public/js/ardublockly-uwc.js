@@ -152,8 +152,22 @@ Ardublockly.saveSketchFileAs = function() {
  * message from server).
  */
 Ardublockly.sendCode = function() {
-  alert(Ardublockly.generateArduino());
-};
+  //alert(Ardublockly.generateArduino());
+  var arduinoCode = Ardublockly.generateArduino();
+  // Reference to Socket.io
+  var socket = io();
+  // Sending Sketch To Node Backend via Socket.io
+  socket.emit('upload-sketch', arduinoCode);
+  // Listening for backend Events
+  // Notify errors
+  socket.on('simple-ide-error', function (data) {
+      alert(data);
+  });
+  // Notify events
+  socket.on('simple-ide', function (data) {
+      alert(data);
+  });
+};  
 
 /** Populate the workspace blocks with the XML written in the XML text area. */
 Ardublockly.XmlTextareaToBlocks = function() {
