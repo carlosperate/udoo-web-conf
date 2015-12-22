@@ -71,7 +71,9 @@
     <script src="/ardublockly/blockly/generators/arduino/text.js"></script>
     <script src="/ardublockly/blockly/generators/arduino/time.js"></script>
     <script src="/ardublockly/blockly/generators/arduino/variables.js"></script>
-    <script src="/ardublockly/blockly/msg/js/en.js"></script>
+    <!-- English as default language -->
+    <script src="/ardublockly/blockly/msg/js//en.js"></script>
+    <script src="/ardublockly/ardublockly/msg/en.js"></script>
 </head>
 
 <body ng-controller="MainController as ctrl">
@@ -190,9 +192,14 @@
 <!-- Prettify JS -->
 <script src="/ardublockly/ardublockly/prettify/prettify.js"></script>
 <!-- Ardublockly app -->
-<script src="/js/ardublockly-uwc.js"></script>
-<!--script src="/ardublockly/ardublockly/ardublockly_design.js"></script-->
 <script src="/ardublockly/ardublockly/ardublockly_blockly.js"></script>
-<!--script src="/ardublockly/ardublockly/ardublockly.js"></script-->
+<script src="/ardublockly/ardublockly/ardublockly.js"></script>
+<script src="/js/ardublockly-uwc.js"></script>
+<script>
+  window.addEventListener('load', function load(event) {
+    window.removeEventListener('load', load, false);
+    Ardublockly.init();
+  });
+</script>
 </body>
 </html>

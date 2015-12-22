@@ -7,19 +7,19 @@
 /** Create a namespace for the application. */
 var Ardublockly = Ardublockly || {};
 
-
 /** Initialize function for Ardublockly on page load. */
-window.addEventListener('load', function load(event) {
-  window.removeEventListener('load', load, false);
+Ardublockly.init = function() {
   // Inject Blockly into content_blocks
-  Ardublockly.injectBlockly(document.getElementById('content_blocks'),
-        '/ardublockly/ardublockly/ardublockly_toolbox.xml');
+  Ardublockly.injectBlockly(
+      document.getElementById('content_blocks'),
+      '/ardublockly/ardublockly/ardublockly_toolbox.xml',
+      '/ardublockly/blockly/');
 
   Ardublockly.designJsInit();
 
   Ardublockly.bindEventListeners();
   Ardublockly.bindBlocklyEventListeners();
-});
+};
 
 /** Initialises all the design related JavaScript. */
 Ardublockly.designJsInit = function() {
@@ -34,7 +34,7 @@ Ardublockly.bindEventListeners = function() {
   // General buttons
   Ardublockly.bindClick_('button_new', Ardublockly.discardAllBlocks);
   Ardublockly.bindClick_('button_load', Ardublockly.loadUserXmlFile);
-  Ardublockly.bindClick_('button_save', Ardublockly.saveXmlFileAs);
+  Ardublockly.bindClick_('button_save', Ardublockly.saveXmlFile);
   Ardublockly.bindClick_('button_upload', Ardublockly.sendCode);
   Ardublockly.bindClick_('button_toggle_toolbox', Ardublockly.toogleToolbox);
 
@@ -59,78 +59,12 @@ Ardublockly.bindEventListeners = function() {
 };
 
 /**
- * Loads an XML file from the server and adds the blocks into the Blockly
- * workspace.
- * @param {!string} xmlFile Server location of the XML file to load.
- */
-Ardublockly.loadServerXmlFile = function(xmlFile) {
-  // The loadXmlBlockFile loads the file asynchronously and needs a callback
-  var loadXmlCallback = function(sucess) {
-    if (sucess) {
-      Ardublockly.renderContent();
-    } else {
-        alert('Invalid XML\n' +
-              'The XML file was not successfully parsed into blocks.' +
-              'Please review the XML code and try again.');
-    }
-  };
-  var callbackConnectionError = function() {
-    alert('Probably not connected to the server');
-  };
-  Ardublockly.loadXmlBlockFile(
-      xmlFile, loadXmlCallback, callbackConnectionError);
-};
-
-/**
- * Loads an XML file from the users file system and adds the blocks into the
- * Blockly workspace.
- */
-Ardublockly.loadUserXmlFile = function() {
-  // Create event listener function
-  var parseInputXMLfile = function(e) {
-    var files = e.target.files;
-    var reader = new FileReader();
-    reader.onload = function() {
-      var success = Ardublockly.replaceBlocksfromXml(reader.result);
-      if (success) {
-        Ardublockly.renderContent();
-      } else {
-        alert('Invalid XML\n' +
-            'The XML file was not successfully parsed into blocks.' +
-            'Please review the XML code and try again.');
-      }
-    };
-    reader.readAsText(files[0]);
-  };
-  // Create once invisible browse button with event listener, and click it
-  var selectFile = document.getElementById('select_file');
-  if (selectFile == null) {
-    var selectFileDom = document.createElement('INPUT');
-    selectFileDom.type = 'file';
-    selectFileDom.id = 'select_file';
-
-    var selectFileWrapperDom = document.createElement('DIV');
-    selectFileWrapperDom.id = 'select_file_wrapper';
-    selectFileWrapperDom.style.display = 'none';
-    selectFileWrapperDom.appendChild(selectFileDom);
-
-    document.body.appendChild(selectFileWrapperDom);
-    selectFile = document.getElementById('select_file');
-    selectFile.addEventListener('change', parseInputXMLfile, false);
-  }
-  selectFile.click();
-};
-
-/**
  * Creates an XML file containing the blocks from the Blockly workspace and
  * prompts the users to save it into their local file system.
  */
-Ardublockly.saveXmlFileAs = function() {
-  var xmlName = 'ardublockly_blocks';
-  var blob = new Blob(
-      [Ardublockly.generateXml()],
-      {type: 'text/plain;charset=utf-8'});
-  saveAs(blob, xmlName + '.xml');
+Ardublockly.saveXmlFile = function() {
+  Ardublockly.saveTextFileAs(
+      'ardublockly_blocks.xml', Ardublockly.generateXml());
 };
 
 /**
@@ -138,12 +72,9 @@ Ardublockly.saveXmlFileAs = function() {
  * the Blockly workspace and prompts the users to save it into their local file
  * system.
  */
-Ardublockly.saveSketchFileAs = function() {
-  var sketchName = 'ardublockly_sketch';
-  var blob = new Blob(
-      [Ardublockly.generateArduino()],
-      {type: 'text/plain;charset=utf-8'});
-  saveAs(blob, sketchName + '.ino');
+Ardublockly.saveSketchFile = function() {
+  Ardublockly.saveTextFileAs(
+      'ardublockly_sketch.ino', ArduBlockly.generateArduino());
 };
 
 /**
@@ -167,98 +98,6 @@ Ardublockly.sendCode = function() {
   socket.on('simple-ide', function (data) {
       alert(data);
   });
-};  
-
-/** Populate the workspace blocks with the XML written in the XML text area. */
-Ardublockly.XmlTextareaToBlocks = function() {
-  var success = Ardublockly.replaceBlocksfromXml(
-      document.getElementById('content_xml').value);
-  if (success) {
-    Ardublockly.renderContent();
-  } else {
-    alert(
-        'Invalid XML\n' +
-        'The XML inputted into the text area was not successfully parsed into' +
-        'blocks. Please review the XML code and try again.');
-  }
-};
-
-
-/**
- * Private variable to save the previous version of the Arduino Code.
- * @type {!String}
- * @private
- */
-Ardublockly.PREVIOUS_ARDUINO_CODE_ =
-    'void setup() {\n\n}\n\n\nvoid loop() {\n\n}';
-
-/**
- * Populate the Arduino Code and Blocks XML panels with content generated from
- * the blocks.
- */
-Ardublockly.renderContent = function() {
-  // Only regenerate the code if a block is not being dragged
-  if (Ardublockly.blocklyIsDragging()) {
-    return;
-  }
-
-  // Render Arduino Code with latest change highlight and syntax highlighting
-  var arduinoCode = Ardublockly.generateArduino();
-  if (arduinoCode !== Ardublockly.PREVIOUS_ARDUINO_CODE_) {
-    var arduinoContent = document.getElementById('content_arduino');
-    // Sets content in case of no pretify and serves as a fast way to scape html
-    arduinoContent.textContent = arduinoCode;
-    arduinoCode = arduinoContent.innerHTML;
-    if (typeof prettyPrintOne == 'function') {
-      var diff = JsDiff.diffWords(Ardublockly.PREVIOUS_ARDUINO_CODE_,
-                                  arduinoCode);
-      var resultStringArray = [];
-      for (var i = 0; i < diff.length; i++) {
-        if (diff[i].added) {
-          resultStringArray.push(
-            '<span class="code_highlight_new">' + diff[i].value + '</span>');
-        } else if (!diff[i].removed) {
-          resultStringArray.push(diff[i].value);
-        }
-      }
-      var codeHtml = prettyPrintOne(resultStringArray.join(''), 'cpp', false);
-      arduinoContent.innerHTML = codeHtml;
-    }
-    Ardublockly.PREVIOUS_ARDUINO_CODE_ = arduinoCode;
-  }
-
-  // Generate plain XML into element
-  var xmlContent = document.getElementById('content_xml');
-  xmlContent.value = Ardublockly.generateXml();
-};
-
-/**
- * Private variable to indicate if the toolbox is meant to be shown.
- * @type {!boolean}
- * @private
- */
-Ardublockly.TOOLBAR_SHOWING_ = true;
-
-/**
- * Toggles the blockly toolbox and the Ardublockly toolbox button On and Off.
- * Uses namespace member variable TOOLBAR_SHOWING_ to toggle state.
- */
-Ardublockly.toogleToolbox = function() {
-  if (Ardublockly.TOOLBAR_SHOWING_) {
-    Ardublockly.blocklyCloseToolbox();
-    Ardublockly.displayToolbox(false);
-  } else {
-    Ardublockly.displayToolbox(true);
-  }
-  Ardublockly.TOOLBAR_SHOWING_ = !Ardublockly.TOOLBAR_SHOWING_;
-};
-
-/**
- * Returns a boolean indicating if the toolbox is currently visible.
- * @return {boolean} Indicates if the toolbox is currently visible.
- */
-Ardublockly.isToolboxVisible = function() {
-  return Ardublockly.TOOLBAR_SHOWING_;
 };
 
 /**
@@ -360,26 +199,6 @@ Ardublockly.resizeBlocklyWorkspace = function() {
       (2 * wrapperPanelSize.width - contentBlocks.offsetWidth) + 'px';
 };
 
-/**
- * Bind a function to a button's click event.
- * On touch enabled browsers, ontouchend is treated as equivalent to onclick.
- * @param {!Element|string} el Button element or ID thereof.
- * @param {!function} func Event handler to bind.
- * @private
- */
-Ardublockly.bindClick_ = function(el, func) {
-  if (typeof el == 'string') {
-    el = document.getElementById(el);
-  }
-  // Need to ensure both, touch and click, events don't fire for the same thing
-  var propagateOnce = function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    func();
-  };
-  el.addEventListener('ontouchend', propagateOnce);
-  el.addEventListener('click', propagateOnce);
-};
 
 /**
  * Compute the absolute coordinates and dimensions of an HTML element.
@@ -405,8 +224,25 @@ Ardublockly.getBBox_ = function(element) {
   };
 };
 
+/**
+ * Interface to displays a short message, which disappears after a time out.
+ * @param {!string} message Text to be temporarily displayed.
+ */
+Ardublockly.shortMessage = function(message) {
+  //TODO: this
+  console.log(message);
+};
 
-Ardublockly.materialAlert = function(title, body, confirm, callback) {
+/**
+ * Interface to display messages with a possible action.
+ * @param {!string} title HTML to include in title.
+ * @param {!element} body HTML to include in body.
+ * @param {boolean=} confirm Indicates if the user is shown a single option (ok)
+ *     or an option to cancel, with an action applied to the "ok".
+ * @param {string=|function=} callback If confirm option is selected this would
+ *     be the function called when clicked 'OK'.
+ */
+Ardublockly.alertMessage = function(title, body, confirm, callback) {
   var fullMessage = title + '\n' + body;
   if (confirm) {
     if (window.confirm(fullMessage)) {
@@ -415,4 +251,8 @@ Ardublockly.materialAlert = function(title, body, confirm, callback) {
   } else {
       window.alert(fullMessage);
   }
+};
+
+Ardublockly.openNotConnectedModal = function() {
+  alert('Probably not connected to the server');
 };
