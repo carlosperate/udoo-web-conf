@@ -40,20 +40,25 @@ Ardublockly.bindEventListeners = function() {
 
   // Load examples buttons
   Ardublockly.bindClick_('menu_example_blink', function() {
+    $('[data-toggle="dropdown"]').parent().removeClass('open');
     Ardublockly.loadServerXmlFile('/ardublockly/examples/blink.xml');
   });
   Ardublockly.bindClick_('menu_example_serial', function() {
+    $('[data-toggle="dropdown"]').parent().removeClass('open');
     Ardublockly.loadServerXmlFile(
         '/ardublockly/examples/serial_print_ascii_.xml');
   });
   Ardublockly.bindClick_('menu_example_serial_game', function() {
+    $('[data-toggle="dropdown"]').parent().removeClass('open');
     Ardublockly.loadServerXmlFile(
         '/ardublockly/examples/serial_repeat_game.xml');
   });
   Ardublockly.bindClick_('menu_example_servo', function() {
+    $('[data-toggle="dropdown"]').parent().removeClass('open');
     Ardublockly.loadServerXmlFile('/ardublockly/examples/servo_knob.xml');
   });
   Ardublockly.bindClick_('menu_example_setpper', function() {
+    $('[data-toggle="dropdown"]').parent().removeClass('open');
     Ardublockly.loadServerXmlFile('/ardublockly/examples/stepper_knob.xml');
   });
 };
@@ -85,6 +90,7 @@ Ardublockly.saveSketchFile = function() {
 Ardublockly.sendCode = function() {
   //alert(Ardublockly.generateArduino());
   var arduinoCode = Ardublockly.generateArduino();
+  Ardublockly.showLoader(true);
   // Reference to Socket.io
   var socket = io();
   // Sending Sketch To Node Backend via Socket.io
@@ -92,10 +98,14 @@ Ardublockly.sendCode = function() {
   // Listening for backend Events
   // Notify errors
   socket.on('simple-ide-error', function (data) {
+      Ardublockly.showLoader(false);
       alert(data);
   });
   // Notify events
   socket.on('simple-ide', function (data) {
+      if (0 == data.localeCompare('Sketch successfully uploaded!')) {
+        Ardublockly.showLoader(false);
+      }
       alert(data);
   });
 };
@@ -194,6 +204,11 @@ Ardublockly.resizeBlocklyWorkspace = function() {
       (2 * wrapperPanelSize.width - contentBlocks.offsetWidth) + 'px';
 };
 
+/** @param {!boolean} show Indicates if it should show the loading bar. */
+Ardublockly.showLoader = function(show) {
+  var loader = document.getElementById('loading-bar');
+  loader.style.display = show ? 'block': 'none';
+};
 
 /**
  * Compute the absolute coordinates and dimensions of an HTML element.
@@ -248,6 +263,8 @@ Ardublockly.alertMessage = function(title, body, confirm, callback) {
   }
 };
 
+/** Unused feature from original Ardublockly, needs overwriting just in case. */
 Ardublockly.openNotConnectedModal = function() {
-  alert('Probably not connected to the server');
+  alert('Please ensure the UDOO-web-conf server is running.');
 };
+

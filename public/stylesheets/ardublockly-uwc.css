@@ -183,6 +183,12 @@
   background-color: #FDBEBE;
 }
 
+.loading-bar {
+  vertical-align: bottom;
+  position: absolute;
+  left: 15px;    /* bootstrap columns horizontal padding*/
+  display: none;
+}
 
 /*****************************/
 /*  Overwriting Blockly CSS  */
