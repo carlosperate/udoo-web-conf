@@ -42,6 +42,14 @@ router.get('/arduino-lite-ide', function(req, res, next) {
   res.render('arduino-lite-ide');
 });
 
+router.get('/ardublockly', function(req, res, next) {
+  res.render('ardublockly');
+});
+
+router.get('/ardublocklystandalone', function(req, res, next) {
+  res.render('ardublocklystandalone');
+});
+
 router.get('/date', function(req, res, next) {
 
   /*var child_process = Promise.promisifyAll(require('child_process'));*/
